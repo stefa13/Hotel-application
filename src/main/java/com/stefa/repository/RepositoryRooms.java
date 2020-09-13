@@ -12,7 +12,9 @@ import java.util.Scanner;
 public class RepositoryRooms implements IRepository<Room> {
     private String fileName;
 
-    public RepositoryRooms(String fileName) {this.fileName = fileName;}
+    public RepositoryRooms(String fileName) {
+        this.fileName = fileName;
+    }
 
     @Override
     public void add(Room room) throws IOException {
@@ -73,7 +75,7 @@ public class RepositoryRooms implements IRepository<Room> {
     public void writeToFile(ArrayList<Room> rooms) throws IOException {
         FileWriter fileWriter = new FileWriter(fileName);
         for (Room room : rooms) {
-            fileWriter.write(room.getNumber()+ "," + room.getType() + "," + room.getCapacity() + "," + room.getPrice() + "," + room.getDescription() + "\n");
+            fileWriter.write(room.getNumber() + "," + room.getType() + "," + room.getCapacity() + "," + room.getPrice() + "," + room.getDescription() + "\n");
         }
         fileWriter.close();
     }

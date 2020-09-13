@@ -7,7 +7,10 @@ import java.util.ArrayList;
 
 public interface IRepository<T> {
     public void add(T t) throws IOException, ParseException;
+
     public void remove(T t) throws IOException, ParseException;
+
     public void update(T t) throws IOException, ParseException;
+
     public ArrayList<T> getAll() throws FileNotFoundException, ParseException;
 }

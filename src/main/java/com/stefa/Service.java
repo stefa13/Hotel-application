@@ -3,16 +3,15 @@ package com.stefa;
 import com.stefa.domain.Reservation;
 import com.stefa.domain.Room;
 import com.stefa.repository.IRepository;
-import com.stefa.repository.RepositoryReservations;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
-public class Service extends Subject{
+public class Service extends Subject {
     private IRepository<Room> repoRooms;
     private IRepository<Reservation> repoReservations;
 
@@ -38,23 +37,23 @@ public class Service extends Subject{
         Notify();
     }
 
-    public void addReservation(String clientName, Date checkInDate, Date checkOutDate, int numberOfGuests) throws IOException, ParseException {
+    public void addReservation(String clientName, String checkInDate, String checkOutDate, int numberOfGuests) throws IOException, ParseException {
         if (clientName.equals("")) {
             throw new RuntimeException("Please provide the name of the client");
         }
         if (numberOfGuests <= 0) {
             throw new RuntimeException("The number of guests should be at least 1.");
         }
-        if (checkInDate.getDay() < 1 || checkInDate.getDay() > 31 || checkOutDate.getDay() < 1 || checkOutDate.getDay() > 31) {
-            throw new RuntimeException("Please check your dates. Day must be between 1 and 31.");
-        }
-        if (checkInDate.getMonth() < 1 || checkInDate.getMonth() > 12 || checkOutDate.getMonth() < 1 || checkOutDate.getMonth() > 12) {
-            throw new RuntimeException("Please check your dates. Month must be between 1 and 12.");
-        }
-        if (checkOutDate.before(checkInDate)) {
+
+        Utils.parseDate(checkInDate, "dd/MM/yyyy");
+        Utils.parseDate(checkOutDate, "dd/MM/yyyy");
+        Date checkIn = new SimpleDateFormat("dd/MM/yyyy").parse(checkInDate);
+        Date checkOut = new SimpleDateFormat("dd/MM/yyyy").parse(checkOutDate);
+
+        if (checkOut.before(checkIn)) {
             throw new RuntimeException("Check-out date must be after check-in date.");
         }
-        repoReservations.add(Reservation.builder().clientName(clientName).checkInDate(checkInDate).checkOutDate(checkOutDate).numberOfGuests(numberOfGuests).build());
+        repoReservations.add(Reservation.builder().clientName(clientName).checkInDate(checkIn).checkOutDate(checkOut).numberOfGuests(numberOfGuests).build());
         Notify();
     }
 
@@ -95,7 +94,7 @@ public class Service extends Subject{
         if (clientName.equals("")) {
             throw new RuntimeException("Please provide the name of the client");
         }
-        if (numberOfGuests <=0) {
+        if (numberOfGuests <= 0) {
             throw new RuntimeException("The number of guests should be at least 1.");
         }
         repoReservations.update(Reservation.builder().id(id).clientName(clientName).checkInDate(checkInDate).checkOutDate(checkOutDate).numberOfGuests(numberOfGuests).build());

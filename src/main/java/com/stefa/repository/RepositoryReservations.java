@@ -2,7 +2,6 @@ package com.stefa.repository;
 
 import com.stefa.Utils;
 import com.stefa.domain.Reservation;
-import com.stefa.domain.Room;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -88,7 +87,7 @@ public class RepositoryReservations implements IRepository<Reservation> {
     public void writeToFile(ArrayList<Reservation> reservations) throws IOException {
         FileWriter fileWriter = new FileWriter(fileName);
         for (Reservation reservation : reservations) {
-            fileWriter.write(reservation.getId()+ "," + reservation.getClientName() + "," + Utils.writeDate(reservation.getCheckInDate()) + "," + Utils.writeDate(reservation.getCheckOutDate()) + "," + reservation.getNumberOfGuests() + "\n");
+            fileWriter.write(reservation.getId() + "," + reservation.getClientName() + "," + Utils.writeDate(reservation.getCheckInDate()) + "," + Utils.writeDate(reservation.getCheckOutDate()) + "," + reservation.getNumberOfGuests() + "\n");
         }
         fileWriter.close();
     }

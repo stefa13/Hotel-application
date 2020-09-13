@@ -1,6 +1,5 @@
 package com.stefa;
 
-import com.stefa.domain.Reservation;
 import com.stefa.domain.Room;
 import lombok.SneakyThrows;
 
@@ -10,9 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class UserGUI extends Observer {
     public JPanel mainPanel;
@@ -59,16 +56,16 @@ public class UserGUI extends Observer {
                 }
                 String name = nameTextField.getText();
                 int numberOfGuests = Integer.parseInt(numberGuestsTextField.getText());
-                Date checkInDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkInTextField.getText());
-                Date checkOutDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkOutTextField.getText());
+                String checkInDate = checkInTextField.getText();
+                String checkOutDate = checkOutTextField.getText();
                 try {
                     service.addReservation(name, checkInDate, checkOutDate, numberOfGuests);
-                    JOptionPane.showMessageDialog(null, "Thank you for your reservation!"+"\n"+"Your reservation ID is "+ service.getIdOfLastReservation()+"\n"+ "Please keep this ID in case you want to cancel.");
+                    JOptionPane.showMessageDialog(null, "Thank you for your reservation!" + "\n" + "Your reservation ID is " + service.getIdOfLastReservation() + "\n" + "Please keep this ID in case you want to cancel.");
                     nameTextField.setText("");
                     numberGuestsTextField.setText("");
                     checkInTextField.setText("");
                     checkOutTextField.setText("");
-                }catch (Exception ex) {
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
             }
@@ -94,43 +91,13 @@ public class UserGUI extends Observer {
         });
     }
 
-    private void populateList(ArrayList<Room> rooms) throws FileNotFoundException, ParseException {
-//        DefaultTableModel model = new DefaultTableModel() {
-//            String[] employee = {"emp 1", "emp 2","f","d"};
-//
-//            @Override
-//            public int getColumnCount() {
-//                return employee.length;
-//            }
-//
-//            @Override
-//            public String getColumnName(int index) {
-//                return employee[index];
-//            }
-//
-//            @SneakyThrows
-//            @Override
-//            public int getRowCount() {
-//                return rooms.size();
-//            }
-//        };
-//        table.setModel(model);
-//        Vector<String> header = new Vector<String>();
-//        header.add("Type");
-//        header.add("Capacity");
-//        header.add("Price/night");
-//        header.add("Description");
-//        Vector<String> vector = new Vector<>();
-//
-//        DefaultTableModel model = new DefaultTableModel();
-//        model.setColumnCount(4);
-//        model.setRowCount(service.getAllRooms().size());
-        String[] columnNames = {"Type", "Capacity", "Price/night","Description"};
+    private void populateList(ArrayList<Room> rooms) {
+        String[] columnNames = {"Type", "Capacity", "Price/night", "Description"};
         DefaultTableModel model = new DefaultTableModel(null, columnNames);
         table.setModel(model);
 
         for (Room r : rooms) {
-            model.addRow(new Object[]{r.getType(), r.getCapacity(),r.getPrice(),r.getDescription()});
+            model.addRow(new Object[]{r.getType(), r.getCapacity(), r.getPrice(), r.getDescription()});
         }
 
     }

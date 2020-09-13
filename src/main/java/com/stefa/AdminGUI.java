@@ -5,8 +5,6 @@ import com.stefa.domain.Room;
 import lombok.SneakyThrows;
 
 import javax.swing.*;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,9 +15,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Vector;
 
-public class AdminGUI extends Observer{
+public class AdminGUI extends Observer {
     public JPanel adminPanel;
     private JTabbedPane tabbedPane;
     private JPanel reservationsPanel;
@@ -57,36 +54,36 @@ public class AdminGUI extends Observer{
             @SneakyThrows
             @Override
             public void actionPerformed(ActionEvent e) {
-                    if (clientNameTextField.getText().equals("")) {
-                        JOptionPane.showMessageDialog(null, "Please provide the name of the client");
-                        return;
-                    }
-                    if (checkInDateTextField.getText().equals("")) {
-                        JOptionPane.showMessageDialog(null, "Please provide the check-in date");
-                        return;
-                    }
-                    if (checkOutDateTextField.getText().equals("")) {
-                        JOptionPane.showMessageDialog(null, "Please provide the check-out date");
-                        return;
-                    }
-                    if (numberOfGuestsTextField.getText().equals("")) {
-                        JOptionPane.showMessageDialog(null, "Please provide the number of guests");
-                        return;
-                    }
-                    String clientName = clientNameTextField.getText();
-                    int numberOfGuests = Integer.parseInt(numberOfGuestsTextField.getText());
-                    Date checkInDate = new SimpleDateFormat("dd/MM/yyyy").parse( checkInDateTextField.getText());
-                    Date checkOutDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkOutDateTextField.getText());
-                    try {
-                        service.addReservation(clientName, checkInDate, checkOutDate, numberOfGuests);
-                        JOptionPane.showMessageDialog(null, "You successfully added the reservation");
-                        clientNameTextField.setText("");
-                        numberOfGuestsTextField.setText("");
-                        checkInDateTextField.setText("");
-                        checkOutDateTextField.setText("");
-                    }catch (Exception ex) {
-                        JOptionPane.showMessageDialog(null, ex.getMessage());
-                    }
+                if (clientNameTextField.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Please provide the name of the client");
+                    return;
+                }
+                if (checkInDateTextField.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Please provide the check-in date");
+                    return;
+                }
+                if (checkOutDateTextField.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Please provide the check-out date");
+                    return;
+                }
+                if (numberOfGuestsTextField.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Please provide the number of guests");
+                    return;
+                }
+                String clientName = clientNameTextField.getText();
+                int numberOfGuests = Integer.parseInt(numberOfGuestsTextField.getText());
+                String checkInDate = checkInDateTextField.getText();
+                String checkOutDate = checkOutDateTextField.getText();
+                try {
+                    service.addReservation(clientName, checkInDate, checkOutDate, numberOfGuests);
+                    JOptionPane.showMessageDialog(null, "You successfully added the reservation");
+                    clientNameTextField.setText("");
+                    numberOfGuestsTextField.setText("");
+                    checkInDateTextField.setText("");
+                    checkOutDateTextField.setText("");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
             }
 
         });
@@ -119,7 +116,7 @@ public class AdminGUI extends Observer{
                 }
                 String clientName = clientNameTextField.getText();
                 int numberOfGuests = Integer.parseInt(numberOfGuestsTextField.getText());
-                Date checkInDate = new SimpleDateFormat("dd/MM/yyyy").parse( checkInDateTextField.getText());
+                Date checkInDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkInDateTextField.getText());
                 Date checkOutDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkOutDateTextField.getText());
                 int id = service.getAllReservations().get(reservationsTable.getSelectedRow()).getId();
                 try {
@@ -129,7 +126,7 @@ public class AdminGUI extends Observer{
                     numberOfGuestsTextField.setText("");
                     checkInDateTextField.setText("");
                     checkOutDateTextField.setText("");
-                }catch (Exception ex) {
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
             }
@@ -151,23 +148,23 @@ public class AdminGUI extends Observer{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (roomNumberTextField.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null,"Please provide the room number");
+                    JOptionPane.showMessageDialog(null, "Please provide the room number");
                     return;
                 }
                 if (typeTextField.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null,"Please provide the type of the room");
+                    JOptionPane.showMessageDialog(null, "Please provide the type of the room");
                     return;
                 }
                 if (capacityTextField.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null,"Please provide the capacity of the room");
+                    JOptionPane.showMessageDialog(null, "Please provide the capacity of the room");
                     return;
                 }
                 if (priceTextField.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null,"Please provide the price of the room");
+                    JOptionPane.showMessageDialog(null, "Please provide the price of the room");
                     return;
                 }
                 if (descriptionTextField.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null,"Please provide a description of the room");
+                    JOptionPane.showMessageDialog(null, "Please provide a description of the room");
                     return;
                 }
 
@@ -184,7 +181,7 @@ public class AdminGUI extends Observer{
                     priceTextField.setText("");
                     descriptionTextField.setText("");
 
-                } catch(Exception ex) {
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
             }
@@ -243,7 +240,7 @@ public class AdminGUI extends Observer{
                     priceTextField.setText("");
                     descriptionTextField.setText("");
 
-                } catch(Exception ex) {
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
             }
@@ -251,21 +248,21 @@ public class AdminGUI extends Observer{
     }
 
     private void populateReservationsTable(ArrayList<Reservation> reservations) {
-        String[] columnNames = {"ID", "Client name", "Check-in","Check-out","Number of guests"};
+        String[] columnNames = {"ID", "Client name", "Check-in", "Check-out", "Number of guests"};
         DefaultTableModel model = new DefaultTableModel(null, columnNames);
         reservationsTable.setModel(model);
         for (Reservation r : reservations) {
-            model.addRow(new Object[]{r.getId(), r.getClientName(),Utils.writeDate(r.getCheckInDate()), Utils.writeDate(r.getCheckOutDate()),r.getNumberOfGuests()});
+            model.addRow(new Object[]{r.getId(), r.getClientName(), Utils.writeDate(r.getCheckInDate()), Utils.writeDate(r.getCheckOutDate()), r.getNumberOfGuests()});
         }
     }
 
     private void populateRoomsTable(ArrayList<Room> rooms) {
-        String[] columnNames = {"Room number", "Type", "Capacity","Price/night","Description"};
+        String[] columnNames = {"Room number", "Type", "Capacity", "Price/night", "Description"};
         DefaultTableModel model = new DefaultTableModel(null, columnNames);
         roomsTable.setModel(model);
 
         for (Room r : rooms) {
-            model.addRow(new Object[]{r.getNumber(), r.getType(),r.getCapacity(), r.getPrice(),r.getDescription()});
+            model.addRow(new Object[]{r.getNumber(), r.getType(), r.getCapacity(), r.getPrice(), r.getDescription()});
         }
     }
 
