@@ -1,0 +1,5 @@
+123,suite,2,23.99,with sea view
+432,double room,2,44.0,street view
+11,apartament,4,200.0,with sea view
+25,suite,2,150.0,street view
+49,double room,2,121.0,sea view
