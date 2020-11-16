@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -103,7 +104,7 @@ public class UserGUI extends Observer {
     }
 
     @Override
-    public void Update() throws FileNotFoundException, ParseException {
+    public void Update() throws FileNotFoundException, ParseException, SQLException {
         populateList(service.getAllRooms());
     }
 }

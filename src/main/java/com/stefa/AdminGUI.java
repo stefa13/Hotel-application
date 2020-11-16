@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class AdminGUI extends Observer {
     private JButton updateButton1;
     private Service service;
 
-    public AdminGUI(Service service) throws FileNotFoundException, ParseException {
+    public AdminGUI(Service service) throws FileNotFoundException, ParseException, SQLException {
         this.service = service;
         service.addObserver(this);
         populateReservationsTable(service.getAllReservations());
@@ -113,6 +114,7 @@ public class AdminGUI extends Observer {
                 int selectedRow = reservationsTable.getSelectedRow();
                 if (selectedRow == -1) {
                     JOptionPane.showMessageDialog(null, "Please select the reservation you want to update");
+                    return;
                 }
                 String clientName = clientNameTextField.getText();
                 int numberOfGuests = Integer.parseInt(numberOfGuestsTextField.getText());
@@ -226,6 +228,7 @@ public class AdminGUI extends Observer {
                 int selectedRow = roomsTable.getSelectedRow();
                 if (selectedRow == -1) {
                     JOptionPane.showMessageDialog(null, "Please select the room you want to update");
+                    return;
                 }
                 int roomNumber = Integer.parseInt(roomNumberTextField.getText());
                 String type = typeTextField.getText();
@@ -267,7 +270,7 @@ public class AdminGUI extends Observer {
     }
 
     @Override
-    public void Update() throws FileNotFoundException, ParseException {
+    public void Update() throws FileNotFoundException, ParseException, SQLException {
         populateReservationsTable(service.getAllReservations());
         populateRoomsTable(service.getAllRooms());
     }

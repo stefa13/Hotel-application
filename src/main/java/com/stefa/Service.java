@@ -6,6 +6,7 @@ import com.stefa.repository.IRepository;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class Service extends Subject {
         this.repoReservations = repoReservations;
     }
 
-    public void addRoom(int number, String type, int capacity, double price, String description) throws IOException, ParseException {
+    public void addRoom(int number, String type, int capacity, double price, String description) throws IOException, ParseException, SQLException {
         if (number < 0) {
             throw new RuntimeException("The number of the room should not be negative.");
         }
@@ -37,7 +38,7 @@ public class Service extends Subject {
         Notify();
     }
 
-    public void addReservation(String clientName, String checkInDate, String checkOutDate, int numberOfGuests) throws IOException, ParseException {
+    public void addReservation(String clientName, String checkInDate, String checkOutDate, int numberOfGuests) throws IOException, ParseException, SQLException {
         if (clientName.equals("")) {
             throw new RuntimeException("Please provide the name of the client");
         }
@@ -57,7 +58,7 @@ public class Service extends Subject {
         Notify();
     }
 
-    public void removeRoom(int number) throws IOException, ParseException {
+    public void removeRoom(int number) throws IOException, ParseException, SQLException {
         if (number < 0) {
             throw new RuntimeException("The number of the room should not be negative.");
         }
@@ -65,12 +66,12 @@ public class Service extends Subject {
         Notify();
     }
 
-    public void removeReservation(int id) throws IOException, ParseException {
+    public void removeReservation(int id) throws IOException, ParseException, SQLException {
         repoReservations.remove(Reservation.builder().id(id).build());
         Notify();
     }
 
-    public void updateRoom(int number, String type, int capacity, double price, String description) throws IOException, ParseException {
+    public void updateRoom(int number, String type, int capacity, double price, String description) throws IOException, ParseException, SQLException {
         if (number < 0) {
             throw new RuntimeException("The number of the room should not be negative.");
         }
@@ -87,7 +88,7 @@ public class Service extends Subject {
         Notify();
     }
 
-    public void updateReservation(int id, String clientName, Date checkInDate, Date checkOutDate, int numberOfGuests) throws IOException, ParseException {
+    public void updateReservation(int id, String clientName, Date checkInDate, Date checkOutDate, int numberOfGuests) throws IOException, ParseException, SQLException {
         if (id < 0) {
             throw new RuntimeException("ID should not be negative");
         }
@@ -101,15 +102,15 @@ public class Service extends Subject {
         Notify();
     }
 
-    public ArrayList<Room> getAllRooms() throws FileNotFoundException, ParseException {
+    public ArrayList<Room> getAllRooms() throws FileNotFoundException, ParseException, SQLException {
         return repoRooms.getAll();
     }
 
-    public ArrayList<Reservation> getAllReservations() throws FileNotFoundException, ParseException {
+    public ArrayList<Reservation> getAllReservations() throws FileNotFoundException, ParseException, SQLException {
         return repoReservations.getAll();
     }
 
-    public int getIdOfLastReservation() throws FileNotFoundException, ParseException {
+    public int getIdOfLastReservation() throws FileNotFoundException, ParseException, SQLException {
         ArrayList<Reservation> reservations = repoReservations.getAll();
         return reservations.get(reservations.size() - 1).getId();
     }
